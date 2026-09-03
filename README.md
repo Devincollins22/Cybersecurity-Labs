@@ -24,8 +24,6 @@ The network adapter was set to **bridged** mode, which puts the VM directly on
 the physical network as its own device, so the router assigns it an IP address
 the same way it would a phone or laptop.
 
-![Ubuntu desktop running in VirtualBox](screenshots/01-vm-desktop-running.png)
-
 ## 2. Updates and tooling
 
 ```bash
@@ -42,7 +40,7 @@ are logged in `/var/log/auth.log`.
 ip addr
 ```
 
-![ip addr showing bridged address](screenshots/03-ip-addr-bridged.png)
+
 
 The VM received **192.168.1.140/24** on `enp0s3` — an address on the physical
 LAN, confirming the bridge worked.
@@ -55,7 +53,6 @@ sudo ufw enable
 sudo ufw status
 ```
 
-![ufw active with OpenSSH allowed](screenshots/04-ufw-status-active.png)
 
 The allow rule comes **before** enabling the firewall. Reversing the order would
 leave a window where the firewall is up and port 22 is closed — recoverable on a
@@ -70,7 +67,6 @@ type $env:USERPROFILE\.ssh\id_ed25519.pub | ssh USER@VM_IP `
   "mkdir -p ~/.ssh && cat >> ~/.ssh/authorized_keys"
 ```
 
-![successful key-based SSH login](screenshots/05-ssh-key-login.png)
 
 The key is copied and tested **before** password login is disabled. Otherwise a
 non-working key plus disabled passwords means no way into the machine at all.
@@ -90,9 +86,6 @@ sudo usermod -aG docker $USER
 docker run hello-world
 ```
 
-![docker hello-world output](screenshots/06-docker-hello-world.png)
-
-![docker compose success banner](screenshots/07-docker-compose-banner.png)
 
 The course repository provided `docker-compose.yml` (defines the check
 container), `README.md` (explains the lab), and `harden.sh` (a hardening script).
@@ -103,8 +96,6 @@ container), `README.md` (explains the lab), and `harden.sh` (a hardening script)
 ip route
 ```
 
-![ip route showing default gateway](screenshots/08-ip-route-gateway.png)
-
 Default gateway is **192.168.1.1** — the router, which forwards traffic from the
 local network to other networks such as the internet.
 
@@ -112,13 +103,9 @@ local network to other networks such as the internet.
 sudo nmap -sn 192.168.1.0/24
 ```
 
-![nmap host discovery sweep](screenshots/09-nmap-host-sweep.png)
-
 <!-- TODO: your report says 11 devices and lists 192.168.1.22 as the iPad, but the
      scan above shows the iPad at .33. Reconcile these before publishing — an
      employer reading closely will spot the mismatch. -->
-
-![network topology map](screenshots/10-network-map.png)
 
 A network map helps secure a network because it shows what is actually
 connected. That makes it easier to spot unknown devices, identify possible
@@ -131,13 +118,9 @@ one unidentified host that would otherwise have gone unnoticed.
 dns.qry.name contains "example"
 ```
 
-![DNS query for example.com](screenshots/11-dns-query-example-com.png)
-
 ```
 tls.handshake.type == 1
 ```
-
-![TLS Client Hello showing SNI](screenshots/12-tls-client-hello-sni.png)
 
 <!-- TODO: Q11 in your report is unfinished — it names the domain but never gives
      the resolved address. Click the DNS response packet, expand Answers, and put
@@ -150,7 +133,6 @@ in the SNI field — encryption hides *what* was sent, not *where*.
 
 ## 8. Snapshot
 
-![VirtualBox snapshot named Lab 1 complete](screenshots/13-snapshot-lab1-complete.png)
 
 A snapshot restores the machine to a known-good state if a later lab breaks
 something — the same role a backup plays.
